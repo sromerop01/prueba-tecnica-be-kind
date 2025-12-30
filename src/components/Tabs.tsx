@@ -1,4 +1,4 @@
-import React, {type ReactNode, useState } from "react"
+import React, { useState } from "react"
 import type { TabsProps, TabItemProps } from "../types/types"
 
 export const Tabs: React.FC<TabsProps> = ({ children }) => {
