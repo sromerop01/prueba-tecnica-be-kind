@@ -59,6 +59,10 @@ export const BakanesActions = () => {
         });
     };
 
+    const handleCreateSuccess = () => {
+        fetchActions()
+    }
+
     return (
         <div className="w-full p-8 bg-white min-h-screen">
         
@@ -91,7 +95,13 @@ export const BakanesActions = () => {
             </div>
 
             {/* Formulario Creacion de Acción */}
-            {showModal && <CreateAction onClose={() => setShowModal(false)} />}
+            {showModal && (
+                <CreateAction
+                    isOpen={showModal} 
+                    onClose={() => setShowModal(false)} 
+                    onSuccess={handleCreateSuccess}
+                />
+            )}
             
             {/* TABLA DE DATOS */}
             <div className="border border-gray-200 rounded-sm overflow-hidden">

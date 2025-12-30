@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useAuth } from '../hooks/useAuth'
+import { actionsApi } from '../api/actions.api'
 import { Upload, Loader2 } from 'lucide-react'
 
 interface CreateActionProps {
-  isOpen?: boolean
+  isOpen: boolean
   onClose: () => void
+  onSuccess: () => void
 }
 
 interface Inputs {
@@ -29,7 +32,7 @@ const PRESET_COLORS = [
   '#64748B', // Slate
 ]
 
-export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClose}) => {
+export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onSuccess}) => {
 
     const {
         register,
@@ -39,14 +42,41 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClo
         formState: { errors, isValid }, 
     } = useForm<Inputs>({mode: "onChange", })
 
-    const descriptionValue = watch("description") || "";
-    const logoFileList = watch("icon");
-    const selectedColor = watch("color");
+    const { token } = useAuth()
+    const descriptionValue = watch("description") || ""
+    const logoFileList = watch("icon")
+    const selectedColor = watch("color")
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitError, setSubmitError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
 
-    const onSubmit = ( data: any) => {
+    const onSubmit = async (data: Inputs) => {
+        if (!token) return
         setLoading(true)
-        console.log(data)
+        setIsSubmitting(true)
+        setSubmitError(null)
+    
+        try {
+            const formData = new FormData()
+          
+            formData.append("name", data.name)
+            formData.append("description", data.description)
+            formData.append("color", data.color)
+            formData.append("status", data.isActive ? "1" : "0")
+            formData.append("icon", data.icon[0])
+
+            await actionsApi.createAction(token, formData)
+    
+            // 3. Éxito
+            onSuccess()
+            onClose()
+    
+        } catch (error: any) {
+            console.error(error)
+            setSubmitError(error.message || "Ocurrió un error al crear la acción.")
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     if (!isOpen) return null
@@ -57,6 +87,13 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClo
 
             {/* Contenedor de crear acciones*/}
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden relative">
+
+                {/* Mensaje de Error General */}
+                {submitError && (
+                    <div className="bg-red-50 text-red-600 p-3 rounded text-sm mb-4">
+                        {submitError}
+                    </div>
+                )}
                 
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 pb-4">
@@ -164,7 +201,7 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClo
                         `}>
                             {PRESET_COLORS.map((colorHex) => {
                                 
-                                const isSelected = selectedColor === colorHex;
+                                const isSelected = selectedColor === colorHex
                                 
                                 return (
                                     <button
@@ -174,7 +211,7 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClo
                                         onClick={() => {
                                             setValue("color", colorHex, { 
                                                 shouldValidate: true
-                                            });
+                                            })
                                         }}
                                         
                                         style={{ backgroundColor: colorHex }}
@@ -187,7 +224,7 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClo
                                         `}
                                         aria-label={`Seleccionar color ${colorHex}`}
                                     />
-                                );
+                                )
                             })}
                         </div>
 
@@ -244,14 +281,14 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen = true, onClo
                         </button>
 
                         <button
-                            disabled={!isValid || loading}
+                            disabled={!isValid || isSubmitting}
                             className={`flex items-center justify-center gap-2 flex-1 px-4 py-2.5 rounded-lg font-medium transition text-white
-                                ${isValid && !loading
+                                ${isValid && !isSubmitting
                                     ? 'bg-blue-900 hover:bg-blue-800 text-white cursor-pointer'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 }
                             `}>
-                            {loading ? <Loader2 className="animate-spin" size={20}/> : "Crear"}
+                            {isSubmitting ? <Loader2 className="animate-spin" size={20}/> : "Crear"}
                         </button>
                     </div>
                 </div>
