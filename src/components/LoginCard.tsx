@@ -3,25 +3,26 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from "react-router-dom"
 import { authApi } from "../api/auth.api"
 import { useAuth } from "../hooks/useAuth"
+import Logo from '../assets/Logo-be-kind.png'
 import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react'
 
 type Inputs = {
   email: string
   password: string
 }
-
+  
 export const LoginCard = () => {
-    const {
-        register, 
-        handleSubmit, 
-        formState: { errors, isValid }, 
-    } = useForm<Inputs>({mode: "onChange", })
-    
     const { login } = useAuth()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+
+    const {
+        register, 
+        handleSubmit, 
+        formState: { errors, isValid }, 
+    } = useForm<Inputs>({mode: "onChange", })
 
     const onSubmit = async (data: Inputs) => {
       try {
@@ -62,10 +63,7 @@ export const LoginCard = () => {
           
           {/* Logo Placeholder */}
           <div className="flex justify-center mb-6">
-            <div className="flex items-center gap-2 border border-blue-900 px-4 py-2">
-              <div className="w-8 h-8 bg-gradient-to-tr from-cyan-400 to-green-400 rounded-full opacity-80" />
-              <span className="text-2xl font-bold text-blue-900">be kind <span className="block text-xs text-center font-normal -mt-1">network</span></span>
-            </div>
+            <img src={Logo} alt="Be Kind Logo" className="h-12 w-auto" />
           </div>
 
           <h2 className="text-xl font-semibold text-center text-gray-800 mb-8 leading-tight">

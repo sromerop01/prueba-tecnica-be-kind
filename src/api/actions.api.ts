@@ -1,22 +1,22 @@
 
-const API_URL = "https://dev.api.bekindnetwork.com/api/v1";
+const API_URL = "https://dev.api.bekindnetwork.com/api/v1"
 
 export interface ActionItem {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  color: string;
-  status: number;
-  createdAt: string;
+  id: string
+  name: string
+  description: string
+  icon: string
+  color: string
+  status: number
+  createdAt: string
 }
 export interface ActionsResponse {
   data: {
-    data: ActionItem[];
-    pageNumber: number;
-    pageSize: number;
-    totalElements: number;
-    totalPages: number;
+    data: ActionItem[]
+    pageNumber: number
+    pageSize: number
+    totalElements: number
+    totalPages: number
   }
 }
 
@@ -26,7 +26,7 @@ export const actionsApi = {
     const params = new URLSearchParams({
       pageNumber: pageNumber.toString(),
       pageSize: pageSize.toString(),
-    });
+    })
 
     const response = await fetch(`${API_URL}/actions/admin-list?${params}`, {
       method: "GET",
@@ -34,13 +34,13 @@ export const actionsApi = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error("Error al cargar las acciones");
+      throw new Error("Error al cargar las acciones")
     }
 
-    const data: ActionsResponse = await response.json();
+    const data: ActionsResponse = await response.json()
     return data
   },
 
@@ -51,14 +51,13 @@ export const actionsApi = {
         "Authorization": `Bearer ${token}`,
       },
       body: actionData,
-    });
+    })
 
     if (!response.ok) {
-      // Intentamos leer el error del backend si existe
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || "Error al crear la acción");
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || "Error al crear la acción")
     }
     
-    return;
+    return
   },
-};
+}

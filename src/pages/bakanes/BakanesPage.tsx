@@ -9,7 +9,7 @@ export const BakanesPage = () => {
   return (
     <div className="w-full bg-gray-50 min-h-screen">
       
-      {/* TÍTULO */}
+      {/* Titulo */}
       <h1 className="text-[32px] font-bold text-black mb-6 tracking-tight">
         Acciones
       </h1>

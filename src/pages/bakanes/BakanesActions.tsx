@@ -30,8 +30,7 @@ export const BakanesActions = () => {
 
         try {
             const response = await actionsApi.getActions(token, page, pageSize);
-      
-            // Mapeo según la estructura de respuesta
+
             const list = response.data.data || [];
             const pages = response.data.totalPages || 0;
             const total = response.data.totalElements || 0;
@@ -59,6 +58,7 @@ export const BakanesActions = () => {
         });
     };
 
+    //Refrescar lista tras crear nueva acción
     const handleCreateSuccess = () => {
         fetchActions()
     }
@@ -199,28 +199,24 @@ export const BakanesActions = () => {
                     </table>
                 )}
 
-                {/* PAGINACIÓN FOOTER - Tu diseño personalizado */}
+                {/* PAGINACIÓN FOOTER */}
                 {!loading && !error && (
                     <div className="flex items-center justify-center gap-6 px-4 py-3 border-t text-sm text-gray-600 select-none">
                         
-                        {/* 1. Selector de Página */}
                         <span>Resultados por página</span>
                         <select 
                             className="border rounded px-2 py-1 outline-none focus:border-blue-500"
                             value={pageSize}
                             onChange={(e) => {
                                 setPageSize(Number(e.target.value));
-                                setPage(1); // Siempre volver a la pág 1 al cambiar el tamaño
+                                setPage(1);
                             }}
                         >
                             <option value={10}>10</option>
                             <option value={20}>20</option>
                             <option value={30}>30</option>
                         </select>
-
-                        {/* 2. Texto informativo "1 - 10 de 50" */}
                         <span>
-                            {/* Cálculo matemático para mostrar el rango correcto */}
                             {totalElements === 0 ? 0 : (page - 1) * pageSize + 1} 
                             {' - '} 
                             {Math.min(page * pageSize, totalElements)} 
@@ -228,9 +224,6 @@ export const BakanesActions = () => {
                             {totalElements}
                         </span>
 
-                        {/* 3. Controles de Navegación */}
-                        
-                        {/* Ir al Inicio («) */}
                         <span 
                             onClick={() => setPage(1)}
                             className={`cursor-pointer font-bold text-lg ${page === 1 ? 'text-gray-300 pointer-events-none' : 'hover:text-black'}`}
@@ -239,7 +232,6 @@ export const BakanesActions = () => {
                             <ChevronsLeft size={16} />
                         </span>
 
-                        {/* Anterior (‹) */}
                         <span 
                             onClick={() => setPage(p => Math.max(1, p - 1))}
                             className={`cursor-pointer font-bold text-lg ${page === 1 ? 'text-gray-300 pointer-events-none' : 'hover:text-black'}`}
@@ -248,7 +240,6 @@ export const BakanesActions = () => {
                             <ChevronLeft size={16} />
                         </span>
 
-                        {/* Siguiente (›) */}
                         <span 
                             onClick={() => setPage(p => p + 1)}
                             className={`cursor-pointer font-bold text-lg ${page >= totalPages ? 'text-gray-300 pointer-events-none' : 'hover:text-black'}`}
@@ -257,7 +248,6 @@ export const BakanesActions = () => {
                             <ChevronRight size={16} />
                         </span>
 
-                        {/* Ir al Final (») */}
                         <span 
                             onClick={() => setPage(totalPages)}
                             className={`cursor-pointer font-bold text-lg ${page >= totalPages ? 'text-gray-300 pointer-events-none' : 'hover:text-black'}`}

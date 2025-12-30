@@ -66,13 +66,12 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onS
             formData.append("icon", data.icon[0])
 
             await actionsApi.createAction(token, formData)
-    
-            // 3. Éxito
+            
             onSuccess()
             onClose()
     
         } catch (error: any) {
-            console.error(error)
+            //console.error(error)
             setSubmitError(error.message || "Ocurrió un error al crear la acción.")
         } finally {
             setIsSubmitting(false)
@@ -139,7 +138,6 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onS
                                 })}
                             ></textarea>
                             
-                            {/* Contador de caracteres*/}
                             <div className="text-right text-xs text-gray-500 mt-1">
                                 <span className={descriptionValue.length > 180 ? 'text-orange-500 font-bold' : ''}>
                                     {descriptionValue.length}
@@ -155,7 +153,7 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onS
                         </div>
                     </div>
 
-                    {/* Logo/Icono */}
+                    {/* Icono */}
                     <div>
                         <label className="block text-sm font-bold text-gray-700 mb-1.5">
                             Icono*
@@ -195,7 +193,6 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onS
                             Color*
                         </label>
                         
-                        {/* Contenedor del mapa de colores */}
                         <div className={`flex flex-wrap gap-3 p-2 border rounded-lg transition
                             ${errors.color ? "border-red-500 bg-red-50" : "border-gray-200"}
                         `}>
@@ -236,7 +233,6 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onS
                         />
 
                         <div className="flex justify-between items-start mt-1 h-5">
-                            {/* Muestra el color seleccionado en texto */}
                             {selectedColor && (
                                 <p className="text-xs text-gray-500">Seleccionado: {selectedColor}</p>
                             )}
@@ -256,7 +252,7 @@ export const CreateAction: React.FC<CreateActionProps> = ({ isOpen, onClose, onS
                             <input
                                 type="checkbox"
                                 className="sr-only peer"
-                                {...register("isActive")} // <--- ¡Esto es todo lo que necesitas!
+                                {...register("isActive")}
                             />
 
                             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer 

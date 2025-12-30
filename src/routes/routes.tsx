@@ -1,6 +1,7 @@
 import type { RouteObject } from "react-router-dom"
 import { AppLayout } from "../layouts/AppLayout"
-import { ProtectedRoute } from "../auth/ProtectedRoute"
+import { ProtectedRoute } from "./ProtectedRoute"
+import { PublicRoute } from "./PublicRoute"
 
 // pages
 import Home from "../pages/home/Home"
@@ -13,8 +14,9 @@ import MarketplacePage from "../pages/marketplace/MarketplacePage"
 import SponsorsPage from "../pages/sponsors/SponsorsPage"
 import SocialImpactPage from "../pages/socialImpact/SocialImpactPage"
 
-
 export const routes: RouteObject[] = [
+
+
   {
     element: <ProtectedRoute />,
     children: [
@@ -36,10 +38,14 @@ export const routes: RouteObject[] = [
   },
 
   {
-    path: "/",
-    children: [
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <div /> },
+    element: <PublicRoute />,
+    children:[
+      {
+        path: "/",
+        children: [
+          { path: "login", element: <LoginPage /> },
+        ],
+      },
     ],
   },
 
@@ -47,4 +53,4 @@ export const routes: RouteObject[] = [
     path: "*",
     element: <div>404 - No encontrado</div>,
   },
-]
+];
