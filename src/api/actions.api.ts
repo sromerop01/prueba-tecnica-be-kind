@@ -43,4 +43,22 @@ export const actionsApi = {
     const data: ActionsResponse = await response.json();
     return data
   },
+
+  createAction: async (token: string, actionData: FormData): Promise<void> => {
+    const response = await fetch(`${API_URL}/actions/admin-add`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: actionData,
+    });
+
+    if (!response.ok) {
+      // Intentamos leer el error del backend si existe
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || "Error al crear la acción");
+    }
+    
+    return;
+  },
 };
