@@ -19,7 +19,7 @@ const menuItems = [
   { label: "Marketplace", icon: Store, path: "/marketplace" },
   { label: "Bakanes", icon: CircleStar, path: "/bakanes" },
   { label: "Contenidos", icon: SquareMousePointer, path: "/content" },
-  { label: "Categorias de acciones", icon: Package2, path: "/actegories-actions" },
+  { label: "Categorias de acciones", icon: Package2, path: "/categories-actions" },
 ];
 
 export const Sidebar = () => {

@@ -1,11 +1,18 @@
-import type { RouteObject } from "react-router-dom";
-import { AppLayout } from "../layouts/AppLayout";
-import { ProtectedRoute } from "../auth/ProtectedRoute";
+import type { RouteObject } from "react-router-dom"
+import { AppLayout } from "../layouts/AppLayout"
+import { ProtectedRoute } from "../auth/ProtectedRoute"
 
 // pages
-import Login from "../pages/login/Login";
-import BakanesPage from "../pages/bakanes/BakanesPage";
-import Home from "../pages/home/Home";
+import Home from "../pages/home/Home"
+import LoginPage from "../pages/login/LoginPage"
+import BakanesPage from "../pages/bakanes/BakanesPage"
+import CategoriesActionsPage from "../pages/categoriesActions/CategoriesActionsPage"
+import CommunityPage from "../pages/community/CommunityPage"
+import ContentPage from "../pages/content/ContentPage"
+import MarketplacePage from "../pages/marketplace/MarketplacePage"
+import SponsorsPage from "../pages/sponsors/SponsorsPage"
+import SocialImpactPage from "../pages/socialImpact/SocialImpactPage"
+
 
 export const routes: RouteObject[] = [
   {
@@ -16,13 +23,13 @@ export const routes: RouteObject[] = [
         element: <AppLayout />,
         children: [
           { path: "", element: <Home /> },
-          { path: "social-impact", element: <BakanesPage /> },
-          { path: "community", element: <BakanesPage /> },
-          { path: "sponsors", element: <BakanesPage /> },
-          { path: "marketplace", element: <BakanesPage /> },
+          { path: "social-impact", element: <SocialImpactPage /> },
+          { path: "community", element: <CommunityPage /> },
+          { path: "sponsors", element: <SponsorsPage /> },
+          { path: "marketplace", element: <MarketplacePage /> },
           { path: "bakanes", element: <BakanesPage /> },
-          { path: "content", element: <BakanesPage /> },
-          { path: "actegories-actions", element: <BakanesPage /> },
+          { path: "content", element: <ContentPage /> },
+          { path: "categories-actions", element: <CategoriesActionsPage /> },
         ],
       },
     ],
@@ -31,7 +38,7 @@ export const routes: RouteObject[] = [
   {
     path: "/",
     children: [
-      { path: "login", element: <Login /> },
+      { path: "login", element: <LoginPage /> },
       { path: "register", element: <div /> },
     ],
   },
@@ -40,4 +47,4 @@ export const routes: RouteObject[] = [
     path: "*",
     element: <div>404 - No encontrado</div>,
   },
-];
+]

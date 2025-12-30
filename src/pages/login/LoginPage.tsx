@@ -1,6 +1,6 @@
 import {LoginCard} from "../../components/LoginCard"
 
-const Login = () => {
+const LoginPage = () => {
 
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center bg-white overflow-hidden">
@@ -9,4 +9,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginPage

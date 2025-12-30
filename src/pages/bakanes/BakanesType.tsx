@@ -1,5 +1,5 @@
 
 
 export const BakanesTypes = () => {
-  return <div>Bakanes Types Page</div>;
+  return <div>Bakanes Types Page</div>
 }
