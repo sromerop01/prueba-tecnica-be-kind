@@ -31,14 +31,10 @@ const onSubmit = async (data: Inputs) => {
       setLoading(true)
       setError("")
 
-      console.log("Enviando datos...", data)
-
       const response = await authApi.login({
         username: data.email,
         password: data.password,
       })
-
-      console.log("Respuesta API:", response) 
       
       let token = ""
 
@@ -56,9 +52,7 @@ const onSubmit = async (data: Inputs) => {
       navigate("/")
 
     } catch (err: any) {
-      console.error("Error capturado:", err)
-      // Mensaje de error amigable
-      const mensaje = err.response?.data?.message || "Credenciales incorrectas o error de conexión"
+      const mensaje = err.response?.data?.message || "Usuario y/o contraseña incorrectos"
       setError(mensaje)
     } finally {
       setLoading(false)
@@ -82,7 +76,7 @@ const onSubmit = async (data: Inputs) => {
           ¡Empieza a conectar tu comunidad ante buenas acciones!
         </h2>
 
-        {/* --- AQUÍ AGREGUÉ EL MENSAJE DE ERROR QUE FALTABA --- */}
+        {/* Mensaje de error */}
         {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
                 <AlertCircle size={18} />
@@ -106,7 +100,7 @@ const onSubmit = async (data: Inputs) => {
               <input
                 type="email"
                 placeholder="Ingresar correo"
-                disabled={loading} // Bloquear input al cargar
+                disabled={loading}
                 {...register("email", {
                   required: "El correo es obligatorio",
                   pattern: {

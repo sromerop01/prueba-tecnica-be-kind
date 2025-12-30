@@ -16,7 +16,13 @@ export const routes: RouteObject[] = [
         element: <AppLayout />,
         children: [
           { path: "", element: <Home /> },
+          { path: "social-impact", element: <BakanesPage /> },
+          { path: "community", element: <BakanesPage /> },
+          { path: "sponsors", element: <BakanesPage /> },
+          { path: "marketplace", element: <BakanesPage /> },
           { path: "bakanes", element: <BakanesPage /> },
+          { path: "content", element: <BakanesPage /> },
+          { path: "actegories-actions", element: <BakanesPage /> },
         ],
       },
     ],

@@ -1,23 +1,42 @@
-import axios from "axios";
-
 const API_URL = "https://dev.apinetbo.bekindnetwork.com/api";
 
 export interface LoginPayload {
   username: string;
   password: string;
 }
-
 export interface LoginResponse {
   token: string;
 }
 
 export const authApi = {
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
-    const response = await axios.post(
-      `${API_URL}/Authentication/Login`,
-      payload
-    );
+    
+    const response = await fetch(`${API_URL}/Authentication/Login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-    return response.data;
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw { 
+        response: { 
+          data: errorData || { message: "Error en la solicitud" },
+          status: response.status 
+        } 
+      };
+    }
+
+    const textResponse = await response.text();
+
+    try {
+        const jsonResponse = JSON.parse(textResponse);
+        if (jsonResponse.token) return jsonResponse;
+        return { token: jsonResponse };
+    } catch {
+        return { token: textResponse };
+    }
   },
 };

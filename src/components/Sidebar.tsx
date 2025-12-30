@@ -13,13 +13,13 @@ import {
 
 const menuItems = [
   { label: "Home", icon: House, path: "/" },
-  { label: "Impacto Social", icon: ChartSpline, path: "/impacto-social" },
-  { label: "Comunidad", icon: Users, path: "/comunidad" },
+  { label: "Impacto Social", icon: ChartSpline, path: "/social-impact" },
+  { label: "Comunidad", icon: Users, path: "/community" },
   { label: "Sponsors", icon: BadgeDollarSign, path: "/sponsors" },
   { label: "Marketplace", icon: Store, path: "/marketplace" },
   { label: "Bakanes", icon: CircleStar, path: "/bakanes" },
-  { label: "Contenidos", icon: SquareMousePointer, path: "/contenidos" },
-  { label: "Categorias de acciones", icon: Package2, path: "/categorias" },
+  { label: "Contenidos", icon: SquareMousePointer, path: "/content" },
+  { label: "Categorias de acciones", icon: Package2, path: "/actegories-actions" },
 ];
 
 export const Sidebar = () => {
@@ -28,7 +28,7 @@ export const Sidebar = () => {
       
       {/* Header del Sidebar con Logo */}
       <div className="h-[151px] w-full flex items-center justify-center bg-white">
-          {/* Aquí iría tu imagen real <img src="..." />. Dejo el placeholder mejorado: */}
+          {/* LOGO */}
           <div className="w-full h-full bg-gradient-to-br from-purple-100 to-yellow-100 flex items-center justify-center text-slate-700 font-bold shadow-sm">
              Logo BeKind
           </div>
@@ -44,8 +44,8 @@ export const Sidebar = () => {
                 className={({ isActive }) => `
                   relative flex items-center gap-3 px-6 py-3.5 text-sm font-medium transition-colors duration-200
                   ${isActive 
-                    ? "bg-teal-50 text-slate-800 border-l-4 border-teal-500" // Estilo Activo (Imagen 3)
-                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent" // Estilo Inactivo
+                    ? "bg-teal-50 text-slate-800 border-l-4 border-teal-500"
+                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent"
                   }
                 `}
               >
@@ -58,7 +58,7 @@ export const Sidebar = () => {
         </ul>
       </nav>
 
-      {/* 4. Footer con Cerrar Sesión (Imagen 3) */}
+      {/* Footer con Cerrar Sesión */}
       <div className="p-4 mt-auto mb-4">
         <button className="flex items-center gap-3 px-6 py-3 text-sm font-medium text-slate-600 hover:text-red-600 transition-colors w-full">
             <LogOut size={20} />
